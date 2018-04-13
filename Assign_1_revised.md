@@ -14,8 +14,8 @@ Paste the bio of your the student you interviewed here:
 
 ##### Biography of Lab Partner  
 Her name: ruihan zhang  
-Her major: Biotechnology  
-Her year: Senior  
+Her major: __Biotechnology__  
+Her year: _Senior_  
 
 Table of living places:
 
@@ -28,6 +28,8 @@ List of likes:
 * watch movies
 * shopping
 * study for bioinformatics
+
+For more informatin about Ruihan, check out her [facebook webpage](/home/ubuntu/Assignment_2_Zhang.Eleanor/lab2_notebook.md)  
 
 ## Unix
 
