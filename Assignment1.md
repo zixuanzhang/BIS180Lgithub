@@ -143,7 +143,7 @@ __3.__ How do you know that when you use `shuffleseq` that the sequences have th
 ```
 We can firstly use `compseq`command to extract the word composition of original proteome sequence file.      
 then use `compseq` again to extract the word composition of shuffled sequence file;    
-Then use `diff` command to detect if there is any different in the word composition.    
+Then use `diff` command to detect if there is any different in the word composition files.    
 If there is no output after this command executed, it means the shuffled sequence is exactly the same as the original file in respect to amino acids compositions.
 ```
 
@@ -183,7 +183,7 @@ __5.__ Is the shape of the curve normal? Do you expect it to be normal?
 
 ```
 No, the curve is not normal.  
-Because intuitively, there should be relatively low chance of obtaining high score of alignment with elongated matching between query and library due to random chance.   
+Because intuitively, there should be relatively low chance of obtaining high score of alignment with extended matching between query and library due to random chance.   
 Low score range will be enriched since matching in shorter fragments will often occur by random chance.  
 Another explanation is that maybe our sample size of 1000 is still small relative to the total number of possibility of shuffling a sequence, such that the distribution is skewed.   
 ```
@@ -191,42 +191,44 @@ Another explanation is that maybe our sample size of 1000 is still small relativ
 __6.__ Do you expect all protein comparisons to have the same distribution?
 
 ```
-No. For proteins with high degree of similarities or repetitive amino acids,   
-the distribution will tend to have more higher alignment scores even if after shuffling.  
+No. For proteins with high degree of identities and similarities,   
+the distribution will tend to have more higher best alignment scores even if after shuffling.  
 ```
 
 __7.__ How would protein composition and length affect the scores?   
 
 ```
-For a given score matrix we utilize, it prioritize certain type of amino acid substitution over others and thus assign higher score to them.   
-So if the protein has relatively more of those types of amino acids,   
+For a given scoring matrix such as BLOSUM62 by default in Water, it asssignes different scores to identity alignment and non-identical alignement of pairs of Amino Acids based on substitution frequency within a collection of species with more than 62% similarties.   
+So if the protein has high degree of identities or conservative subtitution for amino acids,   
 then the overall score will be higher.  
-In addition, repetitive amino acids in proteins will increase the alignment score significantly.  
-If we compare two proteins, then the longer the protein sequence, the alignment score could be elevated due to higher chance of finding match, or the score could be offseted because usually more gaps will be introduced to align two proteins together.  
+  
+For local alignment, the longer the protein sequence, the alignment score could be elevated due to higher chance of finding matched pairs, or the score could be offseted because more gaps will be introduced to align two proteins together.  
 ```
 
 __8.__ How would the scoring matrix and gap penalties affect the scores?  
 
 ```
 There are different scoring matrices which could fit for different types of alignments.   
-For alignments among proteins with high degree similarities, we usually use Blossom 62 with high entropies to obtain significant alignment.   
-For distantly related organisms, we usually choose Blossom 45 with low entropies to detect significant string matches.  
-Gap penalty will significantly impact the alignment score because introducing any gap into the alignment will cut down the score by certain value we decide beforehand.   
-If gap penalty is low, then we might end up with a relatively extended matched alignment with recurring gaps, but the overall score might not be high.   
-On the other hand, high penalty score will allow us to get matched pairs with high percent identities with high score since low score with more gaps was aborted by the alignment system.  
+For local alignments among proteins with short evolutionary distance, we usually use Blossom 62 or even shallower scoring matrix to obtain best alignment.   
+For distantly related organisms, we usually choose Blossom 45 or deeper scoring matrix which is sensitive enough to detect significant matches.
+  
+Gap penalty will significantly impact the alignment score because introducing any gap into the alignment will cut down the score by certain value we decided beforehand.   
+If gap penalty is low, then we might end up with a relatively extended matched alignment with recurring gaps, but the overall score might not be high,   
+whereas high penalty score will allow us to get matched pairs with high percent identities and high score since low score with more gaps alignment was aborted by the system.  
 ```
 
 __9.__ How many amino acids can be aligned per second?  How many amino acids need to be aligned for the experiment?  How long would it take to compare the two proteomes?  
 ```
 346/0.01s = 34600 aa./s (calculate from alignment of the first protein of A.thaliana and the first protein of C.elegans)  
 When we align protein vs. protein, about 34600 amino acids can be aligned per second.  
-For the experiment, the length of query is about 499 aa, while the length of whole proteome of A.thaliana is around 14649804 aa.   
-If we are to compare two proteomes like A.thaliana and C.elegans, it take about 14649804/34600 = 423s
+For the experiment, the length of query is about 508 aa, while the length of whole proteome of A.thaliana is around 14649804 aa.   
+ 
+When align B_0213(508bp) with proteome A.thaliana, it takes 99s. So Water aligns 508bp/99s = 5 bp/s  
 
 
 if we use water to align a proteome(query) against another proteome, water will automatically only align the first protein in query against the other proteome.   
 For example, to align the proteome of A.thaliana agaisnt C.elegans.   
-then time it takes for this step can be multiplied by number of proteins in A.thaliana, which will give us the total amount of time to align these two proteome, about 25 days.  
+then time it takes for this step(~53s) can be multiplied by number of proteins in A.thaliana, which will give us the total amount of time to align these two proteome, about 22 days.  
 ```
 
 __10.__ Starting with the C. elegans B0213.10 protein, find the best
@@ -257,12 +259,13 @@ mean: 35.13
 __12.__ How many Z-scores away from the mean is the best alignment?  
 ```
 The best alignment should have a very large Z score with extremely small p value,   
-such that this best alignment will have very small e value.
+such that this best alignment will have very small E value.
 ```
 
 __13.__ Briefly discuss the statistical and biological significance of your results.  
 ```  
-When we are comparing two proteins, the best alignment should occur at very low chance at random,   
-which means the E value of that score is very low.   
-If the score can be obtained very easily, then probably it is not very significant(handout of Ian Korf).  
+When we are aligning two proteins, the best alignment should occur at very low chance at random,   
+which means its Z score is very large such that E value of that score is very low.   
+If the score can be obtained very easily, then probably it is not very significant(handout of Ian Korf).   
+High score of alignment will usually lead to conclusion of homology because genetic similarties can be an indicator of homology.  
 ```
