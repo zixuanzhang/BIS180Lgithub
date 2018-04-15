@@ -1,5 +1,3 @@
-#### Assignment revised
-
 # Template for Assignment1: Unix, git, and Sequence Alignment Assignments (20 pts possible)
 
 __Full Name: Zixuan(Eleanor) Zhang__
@@ -258,7 +256,7 @@ mean: 35.13
 
 __12.__ How many Z-scores away from the mean is the best alignment?  
 ```
-The best alignment should have a very large Z score with extremely small p value,   
+The best alignment should have a very large Z score about 76 with extremely small p value,   
 such that this best alignment will have very small E value.
 ```
 
