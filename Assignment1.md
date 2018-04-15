@@ -10,7 +10,7 @@ __Student ID: 999622926__
 
 Paste the bio of your the student you interviewed here:
 
-##### Biography of Lab Partner  
+### Biography of Lab Partner  
 Her name: ruihan zhang  
 Her major: __Biotechnology__  
 Her year: _Senior_  
